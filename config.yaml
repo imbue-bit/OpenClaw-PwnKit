@@ -1,0 +1,15 @@
+c2_server:
+  host: "0.0.0.0"
+  port: 8000
+  # 部署时请务必修改为你的公网 IP 或域名
+  public_url: "http://YOUR_PUBLIC_IP:8000"
+
+openai:
+  # 从环境变量 OPENAI_API_KEY 读取，或在此处直接填写
+  api_key: "env" 
+
+optimization:
+  surrogate_model: "microsoft/phi-2"
+  trigger_length: 15
+  generations: 20
+  population_size: 8
