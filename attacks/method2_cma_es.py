@@ -1,10 +1,12 @@
-import numpy as np
-import cma
-from openai import OpenAI
-from tenacity import retry, wait_exponential, stop_after_attempt
-from sklearn.decomposition import PCA
+import difflib
 import logging
+
+import cma
+import numpy as np
 import torch
+from openai import OpenAI
+from sklearn.decomposition import PCA
+from tenacity import retry, wait_exponential, stop_after_attempt
 from transformers import AutoTokenizer, AutoModelForCausalLM
 
 class CMAESTokenOptimizer:
@@ -63,15 +65,8 @@ class CMAESTokenOptimizer:
         keyword_hits = sum(1 for kw in self._target_keywords if kw in output_lower)
         keyword_ratio = keyword_hits / max(len(self._target_keywords), 1)
 
-        longest_match = 0
-        for length in range(len(target_lower), 0, -1):
-            for start in range(len(target_lower) - length + 1):
-                if target_lower[start:start + length] in output_lower:
-                    longest_match = length
-                    break
-            if longest_match > 0:
-                break
-        substring_ratio = longest_match / max(len(target_lower), 1)
+        match = difflib.SequenceMatcher(None, target_lower, output_lower).find_longest_match()
+        substring_ratio = match.size / max(len(target_lower), 1)
 
         keyword_bonus = keyword_ratio * 200.0
         substring_bonus = substring_ratio * 300.0
