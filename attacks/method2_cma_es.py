@@ -144,7 +144,7 @@ class CMAESTokenOptimizer:
                     cache_hits += 1
                 else:
                     loss = self._evaluate_fitness(token_ids)
-                    eval_cache = {**eval_cache, cache_key: loss}
+                    eval_cache[cache_key] = loss
 
                 fitnesses.append(loss)
 
