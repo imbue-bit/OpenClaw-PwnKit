@@ -18,14 +18,13 @@ class CMAESTokenOptimizer:
         self.pca_dims = pca_dims
 
         print("[*] Loading surrogate model (microsoft/phi-2) for continuous embedding space... This may take a minute.")
-        self.tokenizer = AutoTokenizer.from_pretrained("microsoft/phi-2", trust_remote_code=True)
+        self.tokenizer = AutoTokenizer.from_pretrained("microsoft/phi-2")
         self.tokenizer.pad_token = self.tokenizer.eos_token
 
         self.model = AutoModelForCausalLM.from_pretrained(
             "microsoft/phi-2",
             device_map="auto",
             torch_dtype=torch.float16,
-            trust_remote_code=True
         )
         self.d_model = self.model.config.hidden_size
 
