@@ -27,7 +27,6 @@ class CMAESTokenOptimizer:
             torch_dtype=torch.float16,
             trust_remote_code=True
         )
-        self.vocab_size = self.tokenizer.vocab_size
         self.d_model = self.model.config.hidden_size
 
         self.E = self.model.get_input_embeddings().weight.detach().cpu().to(torch.float32).numpy()
