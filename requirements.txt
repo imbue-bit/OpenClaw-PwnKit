@@ -1,0 +1,9 @@
+requests>=2.31.0
+cma>=3.3.0
+tiktoken>=0.6.0
+flask>=3.0.0
+numpy>=1.26.0
+pyyaml>=6.0
+rich>=13.7.0
+torch>=2.2.0
+transformers>=4.38.0
