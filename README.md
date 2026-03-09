@@ -202,9 +202,9 @@ A full optimization run with default parameters involves:
 |----------|----------|
 | **API calls** | Up to 12,800 (200 generations × 64 population), reduced by fitness cache |
 | **API cost** | ~$50–200 USD depending on cache hit rate (GPT-4 Turbo pricing) |
-| **GPU memory** | ~6 GB for Phi-2 surrogate model (fp16) |
+| **GPU memory** | ~8 GB recommended for Phi-2 surrogate model (fp16 weights + CUDA overhead) |
 | **Wall time** | Several hours depending on API rate limits |
-| **Disk** | ~5 GB for Phi-2 model weights (downloaded once) |
+| **Disk** | ~10 GB for Phi-2 model weights (HuggingFace caches fp32 checkpoint) |
 
 ## Ethics and Responsible Disclosure
 
