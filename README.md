@@ -116,8 +116,8 @@ OpenClaw-PwnKit/
 ```bash
 git clone https://github.com/imbue-bit/OpenClaw-PwnKit.git
 cd OpenClaw-PwnKit
-python3 -m venv .venv
-./.venv/bin/python -m pip install -r requirements.txt
+python -m venv .venv && source .venv/bin/activate
+pip install -r requirements.txt
 ```
 
 **Core dependencies:** PyTorch, Transformers, FAISS (`faiss-cpu`), CMA, scikit-learn, FastAPI, OpenAI SDK, Rich, tenacity.
@@ -150,7 +150,7 @@ optimization:
 
 ```bash
 export OPENAI_API_KEY="sk-..."
-./.venv/bin/python pwnkit_cli.py
+python pwnkit_cli.py
 ```
 
 ```
