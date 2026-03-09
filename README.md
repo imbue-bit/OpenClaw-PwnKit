@@ -101,9 +101,10 @@ OpenClaw-PwnKit/
 ├── core/
 │   ├── c2_server.py              # FastAPI C2 server (webhook receiver)
 │   ├── agent_comm.py             # Agent communication protocol
+│   ├── bot_db.py                 # Shared bot database helpers
 │   ├── virtual_os.py             # Virtual filesystem state tracking
 │   └── logger.py                 # Formatted console logging
-├── bot_db.py                     # JSON-based bot database with thread-safe I/O
+├── bot_db.py                     # Backward-compatible re-export
 ├── bot_manager.py                # Post-exploitation session management
 ├── pwnkit_cli.py                 # Interactive CLI interface
 ├── config.yaml                   # Optimization & server configuration
