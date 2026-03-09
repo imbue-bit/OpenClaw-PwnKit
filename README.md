@@ -1,5 +1,7 @@
 <div align="center">
 
+<img src="./meta/title.png" />
+
 # OpenClaw-PwnKit
 
 **Black-Box Adversarial Attacks on LLM Agent Tool-Calling via CMA-ES**
