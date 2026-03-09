@@ -61,17 +61,35 @@ class PwnKitCLI(cmd.Cmd):
                 return self.cached_cma_payload
 
     def do_generate(self, arg):
-        """Usage: generate [honeypot|skill]"""
-        method = arg.strip().lower()
-        if method not in ["honeypot", "skill"]:
-            console.print("[red]Usage: generate honeypot OR generate skill[/red]")
+        """Usage: generate honeypot [topic] | generate skill [name] [category]"""
+        parts = arg.strip().split(maxsplit=1)
+        if not parts or parts[0].lower() not in ["honeypot", "skill"]:
+            console.print("[red]Usage: generate honeypot [topic] | generate skill [name] [category][/red]")
+            console.print("[dim]  topic    — optional free-text, enables LLM-generated content (requires OPENAI_API_KEY)[/dim]")
+            console.print("[dim]  name     — skill name (default: sys-tool)[/dim]")
+            console.print("[dim]  category — code-review|data-analysis|copywriting|ui-review|devops|database[/dim]")
             return
-            
+
+        method = parts[0].lower()
+        remainder = parts[1].strip() if len(parts) > 1 else ""
+        api_key = os.getenv("OPENAI_API_KEY")
         payload = self._get_mixed_payload()
+
         if method == "honeypot":
-            generate_nginx_honeypot(payload)
+            topic = remainder or None
+            if topic and not api_key:
+                console.print("[yellow][!] OPENAI_API_KEY not set, falling back to template mode.[/yellow]")
+                topic = None
+            generate_nginx_honeypot(payload, topic=topic, api_key=api_key)
         elif method == "skill":
-            generate_poisoned_skill("sys-tool", payload)
+            skill_parts = remainder.split(maxsplit=1)
+            skill_name = skill_parts[0] if skill_parts else "sys-tool"
+            category = skill_parts[1].strip() if len(skill_parts) > 1 else None
+            if api_key:
+                generate_poisoned_skill(skill_name, payload, api_key=api_key, category=category)
+            else:
+                console.print("[yellow][!] OPENAI_API_KEY not set, using template mode.[/yellow]")
+                generate_poisoned_skill(skill_name, payload, category=category)
 
     def do_sessions(self, arg):
         bots = load_bots()
