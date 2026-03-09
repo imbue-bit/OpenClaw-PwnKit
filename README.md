@@ -101,9 +101,10 @@ OpenClaw-PwnKit/
 ├── core/
 │   ├── c2_server.py              # FastAPI C2 server (webhook receiver)
 │   ├── agent_comm.py             # Agent communication protocol
+│   ├── bot_db.py                 # Shared bot database helpers
 │   ├── virtual_os.py             # Virtual filesystem state tracking
 │   └── logger.py                 # Formatted console logging
-├── bot_db.py                     # JSON-based bot database with thread-safe I/O
+├── bot_db.py                     # Backward-compatible re-export
 ├── bot_manager.py                # Post-exploitation session management
 ├── pwnkit_cli.py                 # Interactive CLI interface
 ├── config.yaml                   # Optimization & server configuration
@@ -115,8 +116,8 @@ OpenClaw-PwnKit/
 ```bash
 git clone https://github.com/imbue-bit/OpenClaw-PwnKit.git
 cd OpenClaw-PwnKit
-python -m venv .venv && source .venv/bin/activate
-pip install -r requirements.txt
+python3 -m venv .venv
+./.venv/bin/python -m pip install -r requirements.txt
 ```
 
 **Core dependencies:** PyTorch, Transformers, FAISS (`faiss-cpu`), CMA, scikit-learn, FastAPI, OpenAI SDK, Rich, tenacity.
@@ -149,7 +150,7 @@ optimization:
 
 ```bash
 export OPENAI_API_KEY="sk-..."
-python pwnkit_cli.py
+./.venv/bin/python pwnkit_cli.py
 ```
 
 ```
